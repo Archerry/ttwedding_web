@@ -1,0 +1,15 @@
+.back {
+    width: 500px;
+    height: 500px;
+    background-color: pink;
+    /* vertical-align: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
