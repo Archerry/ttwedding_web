@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import cStyle from "./Login.module.css";
+import k from "./Login.module.less";
 
 const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -11,7 +11,7 @@ const onFinishFailed = (errorInfo: any) => {
 };
 
 const Login: React.FC = () => (
-    <div className={cStyle.back}>
+    <div className={k.back}>
         <Form
             name="basic"
             labelCol={{ span: 8 }}
