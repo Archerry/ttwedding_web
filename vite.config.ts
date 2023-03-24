@@ -11,7 +11,7 @@ export default defineConfig({
        * 默认：'camelCaseOnly'。
        * 'camelCase' | 'camelCaseOnly' | 'dashes' | 'dashesOnly'
        * */
-      localsConvention: 'dashesOnly'
+      localsConvention: 'dashesOnly',
     },
     // 指定传递给 CSS 预处理器的选项。
     preprocessorOptions: {
@@ -19,17 +19,20 @@ export default defineConfig({
       less: {
         // 支持内联 JavaScript
         javascriptEnabled: true,
-      }
-    }
+      },
+    },
   },
-  plugins: [react()],
+  plugins: [
+    react()
+  ],
   server: {
     proxy: {
-      "/api": {
-        target: "https://www.tangbridal.com",
+      '/api': {
+        // target: 'https://www.tangbridal.com',
+        target: 'http://localhost:8080',
         changeOrigin: true,
-        secure: false
-      }
-    }
-  }
-})
+        // secure: false,
+      },
+    },
+  },
+});
