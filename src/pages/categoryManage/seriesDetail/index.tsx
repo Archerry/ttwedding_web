@@ -1,63 +1,66 @@
-import {Form, Input, Select, Typography} from 'antd';
+import {Form, FormInstance, Input, Select, Typography} from 'antd';
 import {Option} from 'antd/es/mentions';
-import {useState} from 'react';
-import {ISeries} from '../../../api/CategoryManage/type';
+import {ICategory, ISeries} from '../../../api/CategoryManage/type';
 import './style.less'
 import ImagePreview from '../detailImagesPreview';
 
 type Props<ISeries> = {
-    data: ISeries;
+    data: ISeries,
+    form: FormInstance,
+    categoryList: Array<ICategory>
 };
 
 const { Text } = Typography
 
-const onFinish = (values: any) => {
-    console.log('Success:', values)
-}
-
-const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
-}
-
 const DetailContent: React.FC = (props: Props<ISeries>) => {
-    const [initiaValues, setInitiaValues] = useState(props.data);
+    const textChange = (itemName: string) => (e) => {
+        console.log(`itemName = ${itemName}, value = ${value}`)
+        const value = e.target.value
+        props.form.setFieldsValue({[itemName]: value})
+    }
 
-    return <Form
-        className='detail_content'
-        name='series_detail'
-        wrapperCol={{ span: 10 }}
-        style={{ maxWidth: 600 }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-        initialValues={initiaValues}
-    >
+    return <div className='detail_content'>
         <span className='content_title content_item'>修改人：<Text className='content_des'>{props.data.uploadUserName}</Text></span>
         <span className='content_title content_item'>修改时间：<Text className='content_des'>{props.data.updateTime}</Text></span>
+        <Form.Item
+            noStyle
+            name='serieId'
+            initialValue={props.data.id}
+        >
+        </Form.Item>
         <Form.Item
             label={<span className='content_title'>系列名</span>}
             name="seriesName"
             initialValue={props.data.seriesName}
-            rules={[{ required: true, message: '请输入需要修改的系列名' }]}
+            rules={[{ message: '请输入需要修改的系列名' }]}
         >
-            <Input />
+            <Input value={props.data.seriesName} onChange={() => {
+                textChange('seriesName')
+            }} />
         </Form.Item>
         <Form.Item
-            name="categoryName"
+            label={<span className='content_title'>系列描述</span>}
+            name="seriesDsc"
+            initialValue={props.data.seriesDsc}
+        >
+            <Input onChange={() => {
+                textChange('seriesDsc')
+            }} />
+        </Form.Item>
+        <Form.Item
+            name="categoryId"
             label={<span className='content_title'>分类</span>}
             hasFeedback
-            rules={[{ required: true, message: '请选择分类' }]}
+            initialValue={props.data.categoryId}
         >
-            <Select placeholder='请选择分类'>
-                <Option value='11'>主纱</Option>
-                <Option value='12'>轻纱</Option>
-                <Option value='13'>秀禾</Option>
-                <Option value='14'>礼服</Option>
-                <Option value='15'>伴娘服</Option>
+            <Select placeholder='请选择分类' value={props.data.categoryId!}>
+                {props.categoryList.map(item => {
+                    return <Option value={item.id} key={item.id}>{item.categoryName}</Option>
+                })}
             </Select>
         </Form.Item>
         <ImagePreview data={props.data} />
-    </Form>
+    </div>
 }
 
 export default DetailContent

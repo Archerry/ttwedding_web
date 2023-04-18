@@ -1,5 +1,5 @@
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
-import Login from "../pages/Login/Login";
+import Login from '../pages/Login';
 import SandBox from "../pages/sandbox/SandBox";
 import NotFound from "../pages/notFound/NotFound";
 import AuthComponent from "../components/AuthComponent";

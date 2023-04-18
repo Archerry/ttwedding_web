@@ -1,3 +1,4 @@
+import {message} from 'antd';
 import axios, { AxiosRequestConfig } from 'axios';
 
 const instance = axios.create({
@@ -26,11 +27,21 @@ instance.interceptors.response.use(
   function (response) {
     // 2xx 范围内的状态码都会触发该函数。
     const { code, msg, data } = response.data;
-    console.log("拦截到的信息：", code, data, msg);
-    // 对响应数据做点什么
-    return data;
+    if (code === 0) {
+        console.log("拦截到的信息：", code, data, msg);
+        return data;
+    } else {
+        message.error(msg)
+    }
   },
   function (error) {
+      message.error(error)
+      if (error.response) {
+          if (error.response.status === 400) {
+              // 直接清空token就可重定向
+              localStorage.setItem('Authorization', '')
+          }
+      }
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
     return Promise.reject(error);
@@ -48,13 +59,5 @@ export const http = {
     config?: AxiosRequestConfig
   ): Promise<T> {
     return instance.post(url, data, config);
-  },
-
-  // get<T=any>(url: string, config?: AxiosRequestConfig) : Promise<T> {
-  //     return service.get(url, config)
-  // },
-  //
-  // post<T=any>(url: string, data?: object, config?: AxiosRequestConfig) :Promise<T> {
-  //     return service.post(url, data, config)
-  // },
+  }
 };

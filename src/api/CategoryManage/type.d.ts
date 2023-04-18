@@ -13,3 +13,12 @@ export interface ISeries {
   categoryName: string
   categoryId: number
 }
+
+export interface ICategoryRecord {
+  list: Array<ICategory>
+}
+
+export interface ICategory {
+  id: number
+  categoryName: string
+}
