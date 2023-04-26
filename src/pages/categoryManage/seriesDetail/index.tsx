@@ -1,10 +1,11 @@
 import {Form, FormInstance, Input, Select, Typography} from 'antd';
 import {Option} from 'antd/es/mentions';
+import React from 'react';
 import {ICategory, ISeries} from '../../../api/CategoryManage/type';
 import './style.less'
 import ImagePreview from '../detailImagesPreview';
 
-type Props<ISeries> = {
+type DetailProps = {
     data: ISeries,
     form: FormInstance,
     categoryList: Array<ICategory>
@@ -12,9 +13,8 @@ type Props<ISeries> = {
 
 const { Text } = Typography
 
-const DetailContent: React.FC = (props: Props<ISeries>) => {
-    const textChange = (itemName: string) => (e) => {
-        console.log(`itemName = ${itemName}, value = ${value}`)
+const DetailContent: React.FC<DetailProps> = (props) => {
+    const textChange = (itemName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         props.form.setFieldsValue({[itemName]: value})
     }
@@ -55,7 +55,7 @@ const DetailContent: React.FC = (props: Props<ISeries>) => {
         >
             <Select placeholder='请选择分类' value={props.data.categoryId!}>
                 {props.categoryList.map(item => {
-                    return <Option value={item.id} key={item.id}>{item.categoryName}</Option>
+                    return <Option value={String(item.id)} key={String(item.id)}>{item.categoryName}</Option>
                 })}
             </Select>
         </Form.Item>

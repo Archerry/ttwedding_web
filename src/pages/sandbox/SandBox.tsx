@@ -28,32 +28,14 @@ const SandBox: React.FC = () => {
           }}
         >
           <Link to="/home" />
-          {categories.map((category) => {
-            <Link
-              to={`/category-manage/mainYarnList/${category.categoryId}`}
-              key={category.categoryId}
-            >
-              {category.name}
-            </Link>;
-          })}
-
-          {/* {invoices.map(invoice => ( */}
-          {/*    <Link */}
-          {/*        style={{ display: "block", margin: "1rem 0" }} */}
-          {/*        to={`/invoices/${invoice.number}`} */}
-          {/*        key={invoice.number} */}
-          {/*    > */}
-          {/*        {invoice.name} */}
-          {/*    </Link> */}
-          {/* ))} */}
-
-          {/* <Link */}
-          {/*    style={{ display: "block", margin: "1rem 0" }} */}
-          {/*    to={`/category-manage/mainYarnList/${invoice.number}`} */}
-          {/*    key={invoice.number} */}
-          {/* > */}
-          {/*    {invoice.name} */}
-          {/* </Link> */}
+          {/*{categories.map((category) => {*/}
+          {/*    return <Link*/}
+          {/*        to={`/category-manage/mainYarnList/${category.categoryId}`}*/}
+          {/*        key={category.categoryId}*/}
+          {/*    >*/}
+          {/*        {category.name}*/}
+          {/*    </Link>*/}
+          {/*})}*/}
           <Outlet />
         </Content>
         <Footer style={{ textAlign: 'center' }}>

@@ -53,9 +53,9 @@ export const getCategories = () => {
   )
 }
 
-export const hideSerie = (serieId: number) => {
+export const hideSerie = (serieId: number, hide: boolean) => {
   return http.get(
-      `/api/tw-series/hideSerie?serieId=${serieId}`,
+      `/api/tw-series/hideSerie?serieId=${serieId}&hide=${hide}`,
   )
 }
 

@@ -2,13 +2,12 @@ import { Header } from "antd/es/layout/layout";
 import { Dropdown, Space, theme, Avatar } from "antd";
 import type { MenuProps } from 'antd';
 import {
-  DownOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons";
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-function TopHeader() {
+const TopHeader: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -23,13 +22,13 @@ function TopHeader() {
     {
       key: "1",
       label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          超级管理员
-        </a>
+          <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.antgroup.com"
+          >
+            超级管理员
+          </a>
       ),
     },
     {
@@ -40,34 +39,35 @@ function TopHeader() {
   ];
 
   return (
-    <Header style={{ padding: "0 16px", background: colorBgContainer }}>
-      {collapsed ? (
-        <MenuUnfoldOutlined
-          onClick={() => {
-            changeCollapsed();
-          }}
-        />
-      ) : (
-        <MenuFoldOutlined
-          onClick={() => {
-            changeCollapsed();
-          }}
-        />
-      )}
-      <div style={{ float: "right" }}>
-        <span>欢迎Archer回来</span>
-        <Dropdown menu={{ items }}>
-          <a onClick={(e) => e.preventDefault()}>
-            <Space>
-              <Avatar size={40} style={{ marginLeft: 10 }}>
-                Archer
-              </Avatar>
-            </Space>
-          </a>
-        </Dropdown>
-      </div>
-    </Header>
-  );
+      <Header style={{ padding: "0 16px", background: colorBgContainer }}>
+        {/*{collapsed ? (*/}
+        {/*    <MenuUnfoldOutlined*/}
+        {/*        onClick={() => {*/}
+        {/*          changeCollapsed();*/}
+        {/*        }}*/}
+        {/*    />*/}
+        {/*) : (*/}
+        {/*    <MenuFoldOutlined*/}
+        {/*        onClick={() => {*/}
+        {/*          changeCollapsed();*/}
+        {/*        }}*/}
+        {/*    />*/}
+        {/*)}*/}
+        <div style={{ float: "right" }}>
+          <span>欢迎Archer回来</span>
+          <Dropdown menu={{ items }}>
+            <a onClick={(e) => e.preventDefault()}>
+              <Space>
+                <Avatar size={40} style={{ marginLeft: 10 }}>
+                  Archer
+                </Avatar>
+              </Space>
+            </a>
+          </Dropdown>
+        </div>
+      </Header>
+  )
 }
+
 
 export default TopHeader;

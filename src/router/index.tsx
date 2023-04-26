@@ -1,4 +1,5 @@
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import {useImperativeHandle} from 'react';
+import {HashRouter, Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import Login from '../pages/Login';
 import SandBox from "../pages/sandbox/SandBox";
 import NotFound from "../pages/notFound/NotFound";
@@ -7,27 +8,27 @@ import Home from "../pages/home/Home";
 import Index from "../pages/categoryManage";
 
 function IndexRouter() {
-  return (
-    <HashRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/"
-          element={
-            <AuthComponent>
-              <SandBox />
-            </AuthComponent>
-          }
-        >
-          <Route path="home" element={<Home />} />
-          <Route path="category-manage/mainYarnList" element={<Index />}>
-            <Route path=":categoryId" element={<Index />} />
-          </Route>
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </HashRouter>
-  );
+    return (
+        <HashRouter>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route
+                    path="/"
+                    element={
+                        <AuthComponent>
+                            <SandBox />
+                        </AuthComponent>
+                    }
+                >
+                    <Route path="home" element={<Home />} />
+                    <Route path="category-manage/mainYarnList" element={<Index />}>
+                        <Route path=":categoryId" element={<Index />} />
+                    </Route>
+                </Route>
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </HashRouter>
+    );
 }
 
 function isAuth() {

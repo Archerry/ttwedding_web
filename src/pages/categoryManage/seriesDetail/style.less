@@ -8,24 +8,31 @@
     font-size: 18px;
   }
 
-  .content_item {
-    margin-bottom: 18px;
-  }
+  .image_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 
-  .content_title {
-    font-weight: bold;
-    font-size: 18px;
-
-    .content_des {
-      font-weight: normal;
-      line-height: 18px;
-      font-size: 18px;
+    .ant-btn {
+      margin: 20px 0 0 0;
     }
 
-    .content_tag {
-      height: 30px;
+    .content_title {
+      font-weight: bold;
       font-size: 18px;
-      line-height: 30px;
+
+      .content_des {
+        font-weight: normal;
+        line-height: 18px;
+        font-size: 18px;
+      }
+
+      .content_tag {
+        height: 30px;
+        font-size: 18px;
+        line-height: 30px;
+      }
     }
   }
 }

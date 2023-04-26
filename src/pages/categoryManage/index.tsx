@@ -3,15 +3,14 @@ import './style.less';
 import React, { useEffect, useState } from "react";
 import {Button, Form, Image, message, Modal, Space, Switch, Table} from 'antd';
 import { ColumnsType } from "antd/es/table";
-import {Simulate} from 'react-dom/test-utils';
 import { useParams } from "react-router-dom";
-import {addSeries, getCategories, getSeriesList, modifySeries} from '../../api/CategoryManage';
-import { ISeries } from '../../api/CategoryManage/type';
+import {addSeries, getCategories, getSeriesList, hideSerie, modifySeries} from '../../api/CategoryManage';
+import {ICategory, ISeries} from '../../api/CategoryManage/type';
 import DetailContent from './seriesDetail';
 import AddSeries from './addSeries';
-import error = Simulate.error;
 
 const Index: React.FC = () => {
+  const [categoryTitle, setCategoryTitle] = useState('');
   const [open, setOpen] = useState(false)
   const [addOpen, setAddOpen] = useState(false);
   const [seriesInfo, setSeriesInfo] = useState<ISeries>()
@@ -20,7 +19,7 @@ const Index: React.FC = () => {
   const [data, setData] = useState(Array<ISeries>)
   const [form] = Form.useForm()
   const [addFrom] = Form.useForm()
-  const [categoryList, setCategoryList] = useState([]);
+  const [categoryList, setCategoryList] = useState(Array<ICategory>);
 
   const onFinish = () => {
     setConfirmLoading(true)
@@ -140,11 +139,33 @@ const Index: React.FC = () => {
       key: 'action',
       render: (_, record) => (
           <Space size="middle">
-            <Switch checked={record.hasDelete} />
+            <Switch
+                checked={record.hasDelete}
+                onChange={(checked) => {
+                  console.log(record)
+                  changeHideStatus(record.id, checked)
+            }} />
           </Space>
       ),
     },
   ];
+
+  const changeHideStatus = async (serieId: number, checked: boolean) => {
+    let newData = [...data]
+    for (const index in newData) {
+      if (newData[index].id === serieId) {
+        newData[index] = {
+          ...newData[index],
+          hasDelete: checked
+        }
+        setData(newData)
+        break
+      }
+    }
+    console.log(newData)
+    const res = await hideSerie(serieId, checked)
+    message.success(checked ? '隐藏成功' : '显示成功')
+  }
 
   useEffect(() => {
     if (typeof params.categoryId === 'undefined') {
@@ -165,12 +186,14 @@ const Index: React.FC = () => {
   const fetchCategoryList = async () => {
     const res = await getCategories()
     setCategoryList(res.list)
+    const index = categoryList.findIndex(item => item.id == Number(params.categoryId))
+    setCategoryTitle(categoryList[index].categoryName)
   }
 
   return (
     <div>
       <div className='operation'>
-        <span className='title'>当前分类标题以及分类id {params.categoryId}</span>
+        <span className='title'>{categoryTitle}</span>
         <Button type='primary' onClick={() => onAdd()}>新增</Button>
       </div>
       <Table columns={columns} dataSource={data} />
@@ -199,7 +222,9 @@ const Index: React.FC = () => {
             style={{ maxWidth: 600 }}
             autoComplete="off"
         >
-          <DetailContent data={seriesInfo} form={form} categoryList={categoryList} />
+          {
+            seriesInfo && <DetailContent data={seriesInfo} form={form} categoryList={categoryList} />
+          }
         </Form>
       </Modal>
       <Modal

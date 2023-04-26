@@ -35,16 +35,19 @@ instance.interceptors.response.use(
     }
   },
   function (error) {
-      message.error(error)
       if (error.response) {
-          if (error.response.status === 400) {
-              // 直接清空token就可重定向
-              localStorage.setItem('Authorization', '')
+          if (error.response.data) {
+              if (error.response.data.code === 400) {
+                  const { history } = error.config
+                  // 直接清空token就可重定向
+                  localStorage.setItem('Authorization', '')
+                  history.navigate('/login')
+              }
           }
       }
-    // 超出 2xx 范围的状态码都会触发该函数。
-    // 对响应错误做点什么
-    return Promise.reject(error);
+      // 超出 2xx 范围的状态码都会触发该函数。
+      // 对响应错误做点什么
+      return Promise.reject(error);
   }
 );
 

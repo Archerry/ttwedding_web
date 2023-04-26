@@ -6,7 +6,7 @@ const Home: React.FC = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  return <div style={{ background: 'red' }}>Homeaaaaa</div>;
+  return <div>Homeaaaaa</div>;
 };
 
 export default Home;

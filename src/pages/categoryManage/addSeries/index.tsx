@@ -15,17 +15,17 @@ const index: React.FC = () => {
         const formData = new FormData();
         formData.append('file', file);
         uploadFile(formData, {
-            onUploadProgress: progressEvent => {
-                onProgress({ percent: Math.round((progressEvent.loaded * 100) / progressEvent.total) });
-            },
+            // onUploadProgress: progressEvent => {
+            //     onProgress({ percent: Math.round((progressEvent.loaded * 100) / progressEvent.total) });
+            // },
         }).then((res) => {
             onSuccess(res);
             message.success('上传成功')
         })
     }
 
-    const handleFileChange = ({ fileList }) => {
-        setFiles([...fileList]);
+    const handleFileChange = ({ fileList }: {fileList: any}) => {
+        setFiles(fileList);
     };
 
     return <div className='addBack'>
@@ -69,7 +69,7 @@ const index: React.FC = () => {
                 action="/api/tw-file/image"
                 listType="picture"
                 headers={{
-                    Authorization: localStorage.getItem('Authorization'),
+                    Authorization: localStorage.getItem('Authorization') || '',
                 }}
                 className="upload-list-inline"
             >

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from 'react';
 import {
   AppstoreOutlined,
   MailOutlined,
@@ -36,10 +36,10 @@ const items: MenuProps['items'] = [
     getItem('礼服', '14'),
     getItem('伴娘服', '15'),
   ]),
-  getItem('人员管理', 'person', <AppstoreOutlined />, [
-    getItem('员工管理', '666'),
-    getItem('管理员管理', '777'),
-  ]),
+  // getItem('人员管理', 'person', <AppstoreOutlined />, [
+  //   getItem('员工管理', '666'),
+  //   getItem('管理员管理', '777'),
+  // ]),
 ];
 
 const SideMenu: React.FC = () => {
